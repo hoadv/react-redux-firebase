@@ -55,11 +55,6 @@ class App extends Component {
           </h4>
           <h4>Todos List</h4>
           {todosList}
-          <h4>New Todo</h4>
-          <input type='text' ref='newTodo' />
-          <button onClick={this.handleAdd}>
-            Add
-          </button>
         </div>
       </div>
     )
