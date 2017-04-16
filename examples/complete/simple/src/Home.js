@@ -10,6 +10,7 @@ import {
 import logo from './logo.svg'
 import TodoItem from './TodoItem'
 import './App.css'
+import Tasks from './Tasks';
 
 class App extends Component {
   static propTypes = {
@@ -55,6 +56,12 @@ class App extends Component {
           </h4>
           <h4>Todos List</h4>
           {todosList}
+          <Tasks />
+          <h4>New Todo</h4>
+          <input type='text' ref='newTodo' />
+          <button onClick={this.handleAdd}>
+            Add
+          </button>
         </div>
       </div>
     )
