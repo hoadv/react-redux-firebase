@@ -9,14 +9,28 @@ class TodoItem extends Component {
     id: PropTypes.string
   }
 
-  render(){
+  render() {
     const {firebase, todo, id} = this.props
     const toggleDone = () => {
       firebase.set(`/todos/${id}/done`, !todo.done)
     }
 
+    const increaseTodo = () => {
+      todo.num = todo.num + 1;
+      firebase.set(`/todos/${id}/num`, todo.num)
+    }
+
+    const decreaseTodo = () => {
+      if (todo.num === 1) {
+        firebase.remove(`/todos/${id}`);
+        return;
+      }
+      
+      todo.num = todo.num - 1;
+      firebase.set(`/todos/${id}/num`, todo.num)
+    }
     const deleteTodo = (event) => {
-       firebase.remove(`/todos/${id}`)
+      firebase.remove(`/todos/${id}`)
     }
     return (
       <li className="Todo">
@@ -25,8 +39,14 @@ class TodoItem extends Component {
           type="checkbox"
           checked={todo.done}
           onChange={toggleDone}
-        />
-        {todo.text || todo.name}
+          />
+        {todo.text || todo.name} (Number task(s): {todo.num})
+        <button className="Todo-Button" onClick={increaseTodo}>
+          Increase
+        </button>
+        <button className="Todo-Button" onClick={decreaseTodo}>
+          Decrease
+        </button>
         <button className="Todo-Button" onClick={deleteTodo}>
           Delete
         </button>

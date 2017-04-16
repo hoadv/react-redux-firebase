@@ -22,7 +22,7 @@ class App extends Component {
   handleAdd = () => {
     const { firebase } = this.props
     const { newTodo } = this.refs
-    firebase.push('/todos', { text: newTodo.value, done: false })
+    firebase.push('/todos', { text: newTodo.value, done: false, num: 1 })
     newTodo.value = ''
   }
 
