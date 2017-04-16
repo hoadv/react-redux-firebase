@@ -42,10 +42,10 @@ class TodoItem extends Component {
           />
         {todo.text || todo.name} (Number task(s): {todo.num})
         <button className="Todo-Button" onClick={increaseTodo}>
-          Increase
+          +1
         </button>
         <button className="Todo-Button" onClick={decreaseTodo}>
-          Decrease
+          -1
         </button>
         <button className="Todo-Button" onClick={deleteTodo}>
           Delete
