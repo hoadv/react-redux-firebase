@@ -15,19 +15,22 @@ class Tasks extends Component {
   static propTypes = {
     tasks: PropTypes.object,
     firebase: PropTypes.shape({
-    })
+    }),
+    onNumTaskChange: PropTypes.func.isRequired
   }
 
 
   render () {
-    const { tasks } = this.props
+    const { tasks, onNumTaskChange } = this.props
 
     const tasksList = (!isLoaded(tasks))
                         ? 'Loading'
                         : (isEmpty(tasks))
                           ? 'Task list is empty'
                           : Object.keys(tasks).map((key) => (
-                            <TaskItem key={key} id={key} task={tasks[key]} />
+                            <TaskItem key={key} id={key} task={tasks[key]} onNumTaskChange={(task) => {
+                              onNumTaskChange(task, key)
+                            }}/>
                           ))
     return (
         <div className='App-todos'>

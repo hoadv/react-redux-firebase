@@ -20,13 +20,45 @@ class App extends Component {
     })
   }
 
-  handleAdd = () => {
-    const { firebase } = this.props
-    const { newTodo } = this.refs
-    firebase.push('/todos', { text: newTodo.value, done: false })
-    newTodo.value = ''
+  updateTodo = (todos, task, taskId) => {
+    const { firebase } = this.props;
+
+    let todo = null;
+    if (todos) {
+      todo = this.findTodoByTask(taskId, todos);
+    }
+
+    if (task.num === -1 && !todo) {
+      return;
+    }
+
+    if (task.num === 1 && !todo) {
+      firebase.push(`/todos`, {text: task.name, done: false, num: 1, taskId: taskId});
+      return;
+    }
+
+     if (todo) {
+       todo.num += task.num;
+       if (todo.num <= 0) {
+         firebase.remove(`/todos/${todo.key}`)
+       } else {
+         firebase.set(`/todos/${todo.key}/num`, todo.num)
+       }
+    }
   }
 
+  findTodoByTask(taskId, todos) {
+    let todo = null;
+    Object.keys(todos).map((key) => {
+      if (todos[key].taskId === taskId) {
+        todo = todos[key];
+        todo.key = key;
+        return;
+      }
+    });
+
+    return todo;
+  }
   render () {
     const { todos } = this.props
 
@@ -56,12 +88,7 @@ class App extends Component {
           </h4>
           <h4>Todos List</h4>
           {todosList}
-          <Tasks />
-          <h4>New Todo</h4>
-          <input type='text' ref='newTodo' />
-          <button onClick={this.handleAdd}>
-            Add
-          </button>
+          <Tasks onNumTaskChange={(task, taskId) => this.updateTodo(todos, task, taskId)}/>
         </div>
       </div>
     )
