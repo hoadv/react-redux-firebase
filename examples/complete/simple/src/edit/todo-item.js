@@ -11,25 +11,28 @@ class TodoItem extends Component {
 
   render() {
     const {firebase, todo, id} = this.props
-    const toggleDone = () => {
-      firebase.set(`/todos/${id}/done`, !todo.done)
+    const increaseTodo = (event) => {
+      todo.num = todo.num + 1;
+      firebase.set(`/todos/${id}/num`, todo.num)
     }
 
-    const deleteTodo = (event) => {
-      firebase.remove(`/todos/${id}`)
-    }
+     const decreaseTodo = (event) => {
+       if (todo.num === 1) {
+          firebase.remove(`/todos/${id}`)
+          return;
+       }
 
+      todo.num = todo.num - 1;
+      firebase.set(`/todos/${id}/num`, todo.num)
+    }
     return (
       <li className="Todo">
-        <input
-          className="Todo-Input"
-          type="checkbox"
-          checked={todo.done}
-          onChange={toggleDone}
-          />
         {todo.text || todo.name}(Number task(s): {todo.num})
-        <button className="Todo-Button" onClick={deleteTodo}>
-          Delete
+         <button className="Todo-Button" onClick={increaseTodo}>
+          +1
+        </button>
+        <button className="Todo-Button" onClick={decreaseTodo}>
+          -1
         </button>
       </li>
     )
