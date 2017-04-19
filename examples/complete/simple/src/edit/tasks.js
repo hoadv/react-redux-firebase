@@ -7,9 +7,7 @@ import {
   dataToJS
 } from 'react-redux-firebase'
 
-import logo from './logo.svg'
-import TaskItem  from './TaskItem'
-import './App.css'
+import TaskItem  from './task-item'
 
 class Tasks extends Component {
   static propTypes = {

@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { firebase } from 'react-redux-firebase'
 
-import './Todo.css'
+import './style.css'
 
 class TaskItem extends Component {
   static propTypes = {
